@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ContactList from './ContactList'
+import styles from "./Contacts.module.css"
 
 function Contacts() {
     const [contacts,setContacts] = useState([]);
@@ -23,7 +24,7 @@ function Contacts() {
       setAlert("Please fill the form");
       return
     }
-    setAlert(" ");
+    setAlert("");
     
     const newContact = {...contact, id:Math.floor(Math.random()*100)}
     setContacts((item)=> [...item,newContact]);
@@ -42,15 +43,26 @@ function Contacts() {
    }
   return (
     <>
-      <div>
+      <div className={styles.container}>
+        <div className={styles.form}>
+
         <input type='text' placeholder='First Name' name='firstName' value={contact.firstName}  onChange={inputChangeHandler} />
         <input type='text' placeholder='Last Name' name='lastName' value={contact.lastName} onChange={inputChangeHandler}/>
         <input type='email' placeholder='Email' name='email' value={contact.email} onChange={inputChangeHandler} />
         <input type='number' placeholder='Phone Number' name='phoneNumber' value={contact.phoneNumber} onChange={inputChangeHandler}/>
         <button onClick={addHandler}>Add Contact</button>
-        <div>
-          { alert && <p>{alert}</p>}
         </div>
+       
+       {
+        alert && (
+           <div className={styles.alert}>
+          <p >{alert}</p>
+        </div>
+        )
+       }
+       
+
+        
         <ContactList contacts = {contacts} deleteHandler = {deleteHandler}/>
       </div>
     </>
